@@ -2,6 +2,7 @@
 """ Console Module """
 import cmd
 import sys
+import shlex
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -74,7 +75,7 @@ class HBNBCommand(cmd.Cmd):
                 if pline:
                     # check for *args or **kwargs
                     if pline[0] is '{' and pline[-1] is'}'\
-                            and type(eval(pline)) is dict:
+                            and type(eval(pline)) == dict:
                         _args = pline
                     else:
                         _args = pline.replace(',', '')
@@ -115,16 +116,31 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        if not args:
+        if len(args) == 0:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
-            print("** class doesn't exist **")
-            return
-        new_instance = HBNBCommand.classes[args]()
-        storage.save()
-        print(new_instance.id)
-        storage.save()
+        try:
+            args_list = shlex.split(args)
+            new_dict = {}
+            for el in args_list[1:]:
+                new_arg = el.split('=')
+                new_dict[new_arg[0]] = new_arg[1]
+
+            new_inst = HBNBCommand.classes[args_list[0]]()
+            for k, v in new_dict.items():
+                if '-' in v:
+                    v = v.replace('-', ' ')
+                else:
+                    try:
+                        v = eval(v)
+                    except BaseException:
+                        pass
+                if hasattr(new_inst, k):
+                    setattr(new_inst, k, v)
+            print(new_inst.id)
+            new_inst.save()
+        except Exception as e:
+            print('** class does not exist **')
 
     def help_create(self):
         """ Help information for the create method """
