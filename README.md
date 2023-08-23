@@ -142,5 +142,5 @@ Usage: <class_name>.update(<_id>, <dictionary>)
 <br>
 
 ### Codebase refactored by:
-* Fredrick Ndungu'u
+* Fredrick Kiboi
 * Odo Peter Ebere
