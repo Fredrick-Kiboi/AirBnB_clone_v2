@@ -42,7 +42,7 @@ class BaseModel:
                 self.updated_at = datetime.now()
             for k, v in kwargs.items():
                 setattr(self, k, v)
-                self.__dict__.update(kwargs)
+            self.__dict__.update(kwargs)
 
     def __str__(self):
         """Returns a string representation of the instance"""
