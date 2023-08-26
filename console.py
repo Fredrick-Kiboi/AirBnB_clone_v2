@@ -123,13 +123,13 @@ class HBNBCommand(cmd.Cmd):
             args_list = shlex.split(args)
             new_dict = {}
             for el in args_list[1:]:
-                new_arg = el.split('=')
+                new_arg = el.split("=")
                 new_dict[new_arg[0]] = new_arg[1]
 
             new_inst = HBNBCommand.classes[args_list[0]]()
             for k, v in new_dict.items():
-                if '-' in v:
-                    v = v.replace('-', ' ')
+                if "_" in v:
+                    v = v.replace("_", " ")
                 else:
                     try:
                         v = eval(v)
