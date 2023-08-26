@@ -29,7 +29,8 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
         else:
-            if "updated_at" in kwargs and "created_at" in kwargs and "__class__" in kwargs:
+            if ("updated_at" in kwargs and "created_at" in kwargs
+                    and "__class__" in kwargs):
                 kwargs['updated_at'] = datetime.strptime(
                     kwargs['updated_at'], isoform_time)
                 kwargs['created_at'] = datetime.strptime(
