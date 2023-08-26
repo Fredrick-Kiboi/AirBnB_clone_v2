@@ -60,15 +60,13 @@ class FileStorage:
         ''' deletes the object obj from the attribute
             __objects if it's inside it
         '''
-        if obj is None:
-            return
-
-        obj_key = str(obj).split(" ")[0]
-        obj_key = obj_key[1:-1]
-        key = obj_cls + "." + obj.id
-        if key in FileStorage.__objects:
-            del(self.all()[key])
-            self.save()
+        if obj is not None:
+            obj_cls = str(obj).split(" ")[0]
+            obj_cls = obj_cls[1:-1]
+            key = obj_cls + "." + obj.id
+            if key in FileStorage.__objects:
+                del(self.all()[key])
+                self.save()
 
     def close(self):
         '''
